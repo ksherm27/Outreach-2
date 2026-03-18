@@ -1,0 +1,23 @@
+# Core
+celery[redis]==5.4.*
+redis==5.2.*
+sqlalchemy==2.0.*
+alembic==1.14.*
+psycopg2-binary==2.9.*
+
+# HTTP & Scraping
+httpx==0.28.*
+beautifulsoup4==4.12.*
+lxml==5.3.*
+playwright==1.49.*
+
+# Configuration
+pyyaml==6.0.*
+python-dotenv==1.0.*
+
+# AI Classification
+openai==1.59.*
+
+# Utilities
+structlog==24.4.*
+tenacity==9.0.*

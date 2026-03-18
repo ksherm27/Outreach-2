@@ -1,0 +1,320 @@
+system:
+  name: "GTM Outreach Automation"
+  environment: "production"
+  timezone: "America/New_York"
+  log_level: "INFO"
+  dry_run: false
+
+scraping:
+  schedule_every_hours: 6
+  board_stagger_minutes: 7
+  request_delay_min_seconds: 2
+  request_delay_max_seconds: 8
+  max_requests_per_domain_per_second: 0.33
+  respect_robots_txt: true
+  job_max_age_hours: 72
+  dedup_window_days: 30
+  boards:
+    linkedin: true
+    indeed: true
+    greenhouse: true
+    lever: true
+    workday: true
+    bamboohr: true
+    ashby: true
+    rippling: true
+    smartrecruiters: true
+    jobvite: true
+    icims: true
+    workable: true
+    jazzhr: true
+    recruiterbox: true
+    wellfound: true
+  search_queries:
+    - "VP Sales SaaS"
+    - "Head of Sales B2B"
+    - "Director of Revenue Operations"
+    - "VP Marketing SaaS"
+    - "Head of GTM"
+    - "CRO startup"
+    - "VP Customer Success"
+    - "Director Demand Generation"
+  user_agents:
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/119.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_1) AppleWebKit/605.1.15 Safari/605.1.15"
+    - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Edge/120.0.0.0"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/118.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (iPhone; CPU iPhone OS 17_1 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/117.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_6) AppleWebKit/537.36 Chrome/116.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0"
+    - "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 Chrome/121.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 12_7) AppleWebKit/537.36 Chrome/115.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:119.0) Gecko/20100101 Firefox/119.0"
+    - "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/120.0.0.0 Mobile Safari/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 Version/14.1.2 Safari/605.1.15"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/114.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (X11; Linux x86_64; rv:118.0) Gecko/20100101 Firefox/118.0"
+    - "Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_7) AppleWebKit/537.36 Chrome/113.0.0.0 Safari/537.36"
+
+icp:
+  score_threshold: 65
+  target_funding_stages:
+    - "Series A"
+    - "Series B"
+    - "Series C"
+    - "Series D"
+    - "Series E"
+  min_employees: 25
+  max_employees: 1000
+  target_locations:
+    - "Remote"
+    - "United States"
+    - "US"
+    - "Canada"
+    - "United Kingdom"
+    - "UK"
+    - "Germany"
+    - "France"
+    - "Netherlands"
+    - "Sweden"
+    - "Spain"
+    - "Australia"
+  target_roles:
+    Sales Leadership:
+      score: 35
+      titles:
+        - "VP of Sales"
+        - "VP Sales"
+        - "Head of Sales"
+        - "Director of Sales"
+        - "Chief Revenue Officer"
+        - "CRO"
+        - "VP of Revenue"
+        - "Director of Revenue Operations"
+        - "Head of RevOps"
+        - "Sales Manager"
+        - "Senior Sales Manager"
+        - "Regional Sales Director"
+    Marketing Leadership:
+      score: 30
+      titles:
+        - "VP of Marketing"
+        - "VP Marketing"
+        - "Head of Marketing"
+        - "Chief Marketing Officer"
+        - "CMO"
+        - "Director of Marketing"
+        - "VP of Demand Generation"
+        - "Head of Demand Gen"
+        - "Director of Growth"
+        - "VP of Product Marketing"
+        - "Head of PMM"
+        - "Director of Product Marketing"
+    Customer Success Leadership:
+      score: 25
+      titles:
+        - "VP of Customer Success"
+        - "Head of Customer Success"
+        - "Director of Customer Success"
+        - "VP of Partnerships"
+        - "Head of Alliances"
+        - "Director of Business Development"
+        - "VP of CS"
+        - "Head of CS"
+    GTM Strategy:
+      score: 30
+      titles:
+        - "Head of GTM"
+        - "VP of GTM"
+        - "VP GTM"
+        - "Director of GTM Strategy"
+        - "Head of Growth"
+        - "VP of Growth"
+        - "Chief Growth Officer"
+        - "CGO"
+    SDR BDR Leadership:
+      score: 20
+      titles:
+        - "SDR Manager"
+        - "BDR Manager"
+        - "Director of Sales Development"
+        - "Head of Inside Sales"
+        - "Sales Development Manager"
+        - "Director of Business Development"
+  scoring:
+    title_exact_match: 35
+    title_fuzzy_match: 20
+    funding_crunchbase_confirmed: 25
+    funding_keyword_in_jd: 15
+    saas_keyword_confirmed: 20
+    employee_count_25_to_500: 10
+    employee_count_500_to_1000: 5
+    posted_within_48h: 10
+    posted_48h_to_72h: 5
+    target_location: 5
+    staffing_agency_detected: -50
+    public_company_detected: -40
+  saas_signals:
+    - "SaaS"
+    - "software as a service"
+    - "cloud platform"
+    - "B2B software"
+    - "developer tools"
+    - "data platform"
+    - "API-first"
+    - "product-led growth"
+    - "PLG"
+    - "subscription software"
+    - "ARR"
+    - "MRR"
+    - "enterprise software"
+    - "vertical SaaS"
+    - "cloud-native"
+  funding_signals:
+    - "Series A"
+    - "Series B"
+    - "Series C"
+    - "Series D"
+    - "Series E"
+    - "venture-backed"
+    - "VC-backed"
+    - "recently raised"
+    - "backed by"
+    - "Y Combinator"
+    - "YC"
+    - "portfolio company"
+    - "growth-stage"
+    - "we've raised"
+  exclude_signals:
+    - "staffing agency"
+    - "recruiting firm"
+    - "talent agency"
+    - "consulting firm"
+    - "systems integrator"
+    - "NYSE:"
+    - "NASDAQ:"
+    - "publicly traded"
+    - "publicly listed"
+    - "Fortune 500"
+    - "Fortune 100"
+    - "government contractor"
+    - "non-profit"
+    - "hedge fund"
+    - "private equity firm"
+    - "bootstrapped"
+    - "pre-seed"
+
+enrichment:
+  crunchbase_cache_ttl_days: 7
+  hunter_fallback_enabled: true
+  team_page_scrape_enabled: true
+  rocketreach_enabled: true
+  rocketreach_max_results: 10
+  min_contact_confidence_score: 0.6
+
+crm:
+  provider: "hubspot"
+  re_enrollment_cooldown_days: 90
+  deal_stages:
+    new: "Outreach Active"
+    positive_reply: "Replied - Positive"
+    objection: "Replied - Objection"
+    meeting_booked: "Meeting Booked"
+    unsubscribed: "Unsubscribed"
+  hubspot:
+    pipeline_id: "default"
+    stage_map:
+      "Outreach Active": "appointmentscheduled"
+      "Replied - Positive": "qualifiedtobuy"
+      "Meeting Booked": "presentationscheduled"
+      "Unsubscribed": "closedlost"
+
+instantly:
+  api_base_url: "https://api.instantly.ai/api/v1"
+  default_campaign_id: ""
+  campaign_map:
+    Sales Leadership: ""
+    Marketing Leadership: ""
+    Customer Success Leadership: ""
+    GTM Strategy: ""
+    SDR BDR Leadership: ""
+    default: ""
+  custom_variables:
+    - first_name
+    - company
+    - funding_stage
+    - role_title
+    - gtm_role_category
+    - source_job_url
+    - icp_score
+
+lemlist:
+  api_base_url: "https://api.lemlist.com/api"
+  linkedin_delay_hours: 36
+  campaign_map:
+    Sales Leadership: ""
+    Marketing Leadership: ""
+    Customer Success Leadership: ""
+    GTM Strategy: ""
+    SDR BDR Leadership: ""
+    default: ""
+  custom_variables:
+    - firstName
+    - company
+    - jobTitle
+    - fundingStage
+    - gtmCategory
+
+call_reminders:
+  delay_days: 3
+  working_hours_start: 9
+  working_hours_end: 17
+  skip_weekends: true
+
+reply_monitoring:
+  poll_interval_minutes: 5
+  max_body_chars_for_ai: 1500
+  gpt_model: "gpt-4o"
+  gpt_max_tokens: 150
+  gpt_temperature: 0.1
+  inbox_count: 8
+  min_confidence_for_auto_route: 0.75
+
+routing:
+  booking_link: ""
+  recruiter_slack_ids:
+    - "U0123456789"
+    - "U0987654321"
+    - "U0112233445"
+  slack_channels:
+    positive_replies: ""
+    objections: ""
+    out_of_office: ""
+    unsubscribes: ""
+    unknown_replies: ""
+  ooo:
+    pause_campaign_on_ooo: true
+    resume_days_after_return: 1
+
+slack_alerts:
+  notify_on_scrape_complete: true
+  notify_on_outreach_launched: false
+  notify_on_reply_routed: false
+  error_rate_alert_threshold: 0.20
+  consecutive_outreach_failures_threshold: 3
+
+retry:
+  max_attempts: 3
+  backoff_base_seconds: 2
+  backoff_multiplier: 2
+  retryable_status_codes:
+    - 429
+    - 500
+    - 502
+    - 503
+    - 504
