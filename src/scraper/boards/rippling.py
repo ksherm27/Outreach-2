@@ -18,7 +18,7 @@ class RipplingScraper(BaseScraper):
     BASE_URL = "https://{company}.rippling-ats.com"
     JOBS_URL = "https://{company}.rippling-ats.com/careers"
 
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
         logger.info("rippling_scraper_started", queries=search_queries)
         # Rippling may require JS rendering; placeholder for implementation
         return []

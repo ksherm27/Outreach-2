@@ -79,6 +79,14 @@ class BaseScraper(ABC):
         if not self._check_robots_txt(url):
             raise RobotsBlockedError(f"Blocked by robots.txt: {url}")
 
+        return self._fetch_api(url, client)
+
+    def _fetch_api(self, url: str, client: httpx.Client) -> httpx.Response:
+        """Fetch a public API URL with rate limiting but NO robots.txt check.
+
+        Use for known public API endpoints (Greenhouse, Lever, Ashby, etc.)
+        where robots.txt may block bots but the API is intended for access.
+        """
         self._rate_limit_delay()
 
         try:
@@ -93,6 +101,6 @@ class BaseScraper(ABC):
             raise ScraperError(f"Request failed for {url}: {e}") from e
 
     @abstractmethod
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
         """Scrape the board for jobs matching the search queries."""
         ...

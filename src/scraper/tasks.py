@@ -56,7 +56,9 @@ def scrape_board(self, board_name: str) -> dict:
 
     try:
         scraper = get_scraper(board_name)
-        raw_jobs = scraper.scrape(settings.scraping.search_queries)
+        board_cfg = settings.scraping.boards.get(board_name)
+        slugs = board_cfg.company_slugs if board_cfg else []
+        raw_jobs = scraper.scrape(settings.scraping.search_queries, company_slugs=slugs)
 
         # Dedup
         all_urls = [j.source_url for j in raw_jobs]

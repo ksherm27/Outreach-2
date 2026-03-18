@@ -33,10 +33,12 @@ def run_scrape():
     print(f"Scraping {len(boards)} enabled boards...")
 
     for board_name in boards:
-        print(f"\n  Scraping {board_name}...")
+        board_cfg = settings.scraping.boards.get(board_name)
+        slugs = board_cfg.company_slugs if board_cfg else []
+        print(f"\n  Scraping {board_name} ({len(slugs)} company slugs)...")
         try:
             scraper = get_scraper(board_name)
-            jobs = scraper.scrape(settings.scraping.search_queries)
+            jobs = scraper.scrape(settings.scraping.search_queries, company_slugs=slugs)
             print(f"    Found {len(jobs)} raw jobs")
 
             if jobs:

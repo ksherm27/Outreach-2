@@ -15,21 +15,123 @@ scraping:
   job_max_age_hours: 72
   dedup_window_days: 30
   boards:
-    linkedin: true
-    indeed: true
-    greenhouse: true
-    lever: true
-    workday: true
-    bamboohr: true
-    ashby: true
-    rippling: true
-    smartrecruiters: true
-    jobvite: true
-    icims: true
-    workable: true
-    jazzhr: true
-    recruiterbox: true
-    wellfound: true
+    linkedin:
+      enabled: true
+      company_slugs: []
+    indeed:
+      enabled: true
+      company_slugs: []
+    greenhouse:
+      enabled: true
+      company_slugs:
+        # Verified working Greenhouse board tokens (Series A-D+ VC-funded)
+        - figma
+        - gusto
+        - airtable
+        - brex
+        - cockroachlabs
+        - dbtlabsinc
+        - anthropic
+        - datadog
+        - grafanalabs
+        - calendly
+        - gongio
+        - hightouch
+        - materialize
+        - launchdarkly
+        - starburst
+        - fivetran
+        - cribl
+        - chainguard
+        - coreweave
+        - assemblyai
+        - runwayml
+        - hextechnologies
+        - mercury
+        - temporaltechnologies
+        - dagsterlabs
+        - salesloft
+        - verkada
+        - tripactions
+    lever:
+      enabled: true
+      company_slugs:
+        # Verified working Lever slugs
+        - neon
+    ashby:
+      enabled: true
+      company_slugs:
+        # Verified working Ashby board slugs (Series A-D+ VC-funded)
+        - ramp
+        - linear
+        - notion
+        - clerk
+        - resend
+        - inngest
+        - mintlify
+        - plain
+        - nango
+        - speakeasy
+        - deel
+        - vanta
+        - drata
+        - clickup
+        - supabase
+        - openai
+        - cohere
+        - pinecone
+        - runway
+        - anyscale
+        - prefect
+        - modal
+        - render
+    workday:
+      enabled: false
+      company_slugs: []
+    bamboohr:
+      enabled: true
+      company_slugs:
+        - lattice
+        - chili-piper
+        - sendoso
+        - salesloft
+        - clari
+        - gorgias
+        - chorus
+    rippling:
+      enabled: false
+      company_slugs: []
+    smartrecruiters:
+      enabled: true
+      company_slugs:
+        - Samsara
+        - Docusign
+        - Smartrecruiters
+    jobvite:
+      enabled: true
+      company_slugs:
+        - talend
+        - zuora
+    icims:
+      enabled: false
+      company_slugs: []
+    workable:
+      enabled: true
+      company_slugs:
+        - personio
+        - paddle
+        - remote
+        - testgorilla
+        - recruitee
+    jazzhr:
+      enabled: false
+      company_slugs: []
+    recruiterbox:
+      enabled: false
+      company_slugs: []
+    wellfound:
+      enabled: false
+      company_slugs: []
   search_queries:
     - "VP Sales SaaS"
     - "Head of Sales B2B"

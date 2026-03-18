@@ -18,7 +18,7 @@ class WellfoundScraper(BaseScraper):
     BASE_URL = "https://wellfound.com"
     SEARCH_URL = "https://wellfound.com/role/l/{role}"
 
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
         logger.info("wellfound_scraper_started", queries=search_queries)
         # Wellfound requires JS rendering - placeholder for Playwright implementation
         return []

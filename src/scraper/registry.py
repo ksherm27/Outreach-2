@@ -29,6 +29,13 @@ def get_enabled_boards() -> list[str]:
     from src.config.settings import get_settings
     settings = get_settings()
     return [
-        board for board, enabled in settings.scraping.boards.items()
-        if enabled and board in _REGISTRY
+        board for board, cfg in settings.scraping.boards.items()
+        if cfg.enabled and board in _REGISTRY
     ]
+
+
+def get_board_config(board_name: str):
+    """Return the BoardConfig for a given board."""
+    from src.config.settings import get_settings
+    settings = get_settings()
+    return settings.scraping.boards.get(board_name)

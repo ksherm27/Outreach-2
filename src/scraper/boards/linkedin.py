@@ -20,7 +20,7 @@ class LinkedInScraper(BaseScraper):
 
     SEARCH_URL = "https://www.linkedin.com/jobs/search/"
 
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
         logger.info("linkedin_scraper_started", queries=search_queries)
         jobs: list[RawJobData] = []
 

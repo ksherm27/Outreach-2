@@ -17,7 +17,7 @@ class IndeedScraper(BaseScraper):
 
     SEARCH_URL = "https://www.indeed.com/jobs"
 
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
         logger.info("indeed_scraper_started", queries=search_queries)
         jobs: list[RawJobData] = []
 

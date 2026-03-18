@@ -16,9 +16,24 @@ class WorkableScraper(BaseScraper):
 
     API_URL = "https://apply.workable.com/api/v1/widget/accounts/{company}"
 
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
-        logger.info("workable_scraper_started", queries=search_queries)
-        return []
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
+        jobs: list[RawJobData] = []
+        logger.info("workable_scraper_started", queries=search_queries, slugs=company_slugs)
+
+        if not company_slugs:
+            from src.scraper.registry import get_board_config
+            cfg = get_board_config("workable")
+            company_slugs = cfg.company_slugs if cfg else []
+
+        for slug in company_slugs:
+            try:
+                found = self.scrape_company(slug, search_queries)
+                jobs.extend(found)
+            except Exception:
+                logger.error("workable_slug_failed", slug=slug)
+
+        logger.info("workable_scraper_done", total_jobs=len(jobs))
+        return jobs
 
     def scrape_company(self, company_slug: str, title_keywords: list[str]) -> list[RawJobData]:
         url = self.API_URL.format(company=company_slug)
@@ -26,7 +41,7 @@ class WorkableScraper(BaseScraper):
 
         with self._get_http_client() as client:
             try:
-                response = self._fetch(url, client)
+                response = self._fetch_api(url, client)
                 data = response.json()
             except Exception:
                 logger.error("workable_fetch_failed", company=company_slug)

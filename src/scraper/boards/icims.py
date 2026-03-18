@@ -19,9 +19,24 @@ class ICIMSScraper(BaseScraper):
 
     SEARCH_URL = "https://careers-{company}.icims.com/jobs/search"
 
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
-        logger.info("icims_scraper_started", queries=search_queries)
-        return []
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
+        jobs: list[RawJobData] = []
+        logger.info("icims_scraper_started", queries=search_queries, slugs=company_slugs)
+
+        if not company_slugs:
+            from src.scraper.registry import get_board_config
+            cfg = get_board_config("icims")
+            company_slugs = cfg.company_slugs if cfg else []
+
+        for slug in company_slugs:
+            try:
+                found = self.scrape_company(slug, search_queries)
+                jobs.extend(found)
+            except Exception:
+                logger.error("icims_slug_failed", slug=slug)
+
+        logger.info("icims_scraper_done", total_jobs=len(jobs))
+        return jobs
 
     def scrape_company(self, company_slug: str, title_keywords: list[str]) -> list[RawJobData]:
         jobs: list[RawJobData] = []

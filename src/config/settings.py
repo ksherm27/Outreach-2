@@ -11,6 +11,12 @@ from dotenv import load_dotenv
 
 
 @dataclass(frozen=True)
+class BoardConfig:
+    enabled: bool = True
+    company_slugs: list[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
 class ScrapingConfig:
     schedule_every_hours: int
     board_stagger_minutes: int
@@ -20,7 +26,7 @@ class ScrapingConfig:
     respect_robots_txt: bool
     job_max_age_hours: int
     dedup_window_days: int
-    boards: dict[str, bool]
+    boards: dict[str, BoardConfig]
     search_queries: list[str]
     user_agents: list[str]
 
@@ -191,6 +197,23 @@ def _build_role_config(raw: dict[str, Any]) -> dict[str, RoleConfig]:
     }
 
 
+def _build_board_configs(raw: dict[str, Any]) -> dict[str, BoardConfig]:
+    """Parse board config supporting both old (bool) and new (dict) formats."""
+    boards: dict[str, BoardConfig] = {}
+    for name, value in raw.items():
+        if isinstance(value, bool):
+            # Legacy format: board_name: true/false
+            boards[name] = BoardConfig(enabled=value, company_slugs=[])
+        elif isinstance(value, dict):
+            boards[name] = BoardConfig(
+                enabled=value.get("enabled", True),
+                company_slugs=value.get("company_slugs", []),
+            )
+        else:
+            boards[name] = BoardConfig(enabled=bool(value), company_slugs=[])
+    return boards
+
+
 def _load_settings(config_path: str | None = None) -> Settings:
     load_dotenv()
 
@@ -230,7 +253,7 @@ def _load_settings(config_path: str | None = None) -> Settings:
             respect_robots_txt=scraping["respect_robots_txt"],
             job_max_age_hours=scraping["job_max_age_hours"],
             dedup_window_days=scraping["dedup_window_days"],
-            boards=scraping["boards"],
+            boards=_build_board_configs(scraping["boards"]),
             search_queries=scraping["search_queries"],
             user_agents=scraping["user_agents"],
         ),

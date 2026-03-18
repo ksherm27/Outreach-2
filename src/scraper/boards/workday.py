@@ -15,10 +15,10 @@ class WorkdayScraper(BaseScraper):
     These are heavily JS-rendered and require Playwright.
     """
 
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
         logger.info("workday_scraper_started", queries=search_queries)
-        # Workday requires JS rendering via Playwright
-        # This is a placeholder for the Playwright-based implementation
+        # Workday requires JS rendering via Playwright — disabled by default
+        # company_slugs would need format "company:site:subdomain"
         return []
 
     def scrape_site(

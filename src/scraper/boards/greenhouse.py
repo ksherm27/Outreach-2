@@ -19,13 +19,23 @@ class GreenhouseScraper(BaseScraper):
 
     SEARCH_URL = "https://boards-api.greenhouse.io/v1/boards/{board_token}/jobs"
 
-    def scrape(self, search_queries: list[str]) -> list[RawJobData]:
+    def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
         jobs: list[RawJobData] = []
-        # Greenhouse doesn't support keyword search on their API directly.
-        # We fetch all jobs from known board tokens and filter by title keywords.
-        # In production, board tokens would be discovered or configured.
-        # For now, this demonstrates the pattern.
-        logger.info("greenhouse_scraper_started", queries=search_queries)
+        logger.info("greenhouse_scraper_started", queries=search_queries, slugs=company_slugs)
+
+        if not company_slugs:
+            from src.scraper.registry import get_board_config
+            cfg = get_board_config("greenhouse")
+            company_slugs = cfg.company_slugs if cfg else []
+
+        for slug in company_slugs:
+            try:
+                found = self.scrape_board_token(slug, search_queries)
+                jobs.extend(found)
+            except Exception:
+                logger.error("greenhouse_slug_failed", slug=slug)
+
+        logger.info("greenhouse_scraper_done", total_jobs=len(jobs))
         return jobs
 
     def scrape_board_token(self, board_token: str, title_keywords: list[str]) -> list[RawJobData]:
@@ -35,7 +45,7 @@ class GreenhouseScraper(BaseScraper):
 
         with self._get_http_client() as client:
             try:
-                response = self._fetch(url, client)
+                response = self._fetch_api(url, client)
                 data = response.json()
             except Exception:
                 logger.error("greenhouse_fetch_failed", board_token=board_token)
