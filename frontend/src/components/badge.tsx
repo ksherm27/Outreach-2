@@ -4,16 +4,16 @@ interface BadgeProps {
 }
 
 const variants = {
-  default: "bg-gray-100 text-gray-700",
-  success: "bg-green-100 text-green-700",
-  warning: "bg-yellow-100 text-yellow-700",
-  danger: "bg-red-100 text-red-700",
-  info: "bg-blue-100 text-blue-700",
+  default: "bg-gray-500/10 text-gray-400 border border-gray-500/20",
+  success: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+  warning: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+  danger: "bg-rose-500/10 text-rose-400 border border-rose-500/20",
+  info: "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20",
 };
 
 export function Badge({ label, variant = "default" }: BadgeProps) {
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${variants[variant]}`}>
+    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium ${variants[variant]}`}>
       {label}
     </span>
   );

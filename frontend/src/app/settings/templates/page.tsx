@@ -29,57 +29,57 @@ export default async function TemplatesPage() {
       <AddTemplateButton existingGroups={existingGroups}>+ Add Template</AddTemplateButton>
 
       {templates.length === 0 && (
-        <div className="bg-white rounded-lg border border-gray-200 px-4 py-8 text-center text-sm text-gray-500">
+        <div className="bg-[#111118] rounded-xl border border-[#1e1e2e] px-4 py-8 text-center text-sm text-gray-500">
           No templates configured. Add outreach message templates to get started.
         </div>
       )}
 
       {Array.from(grouped.entries()).map(([groupName, groupTemplates]) => (
         <div key={groupName} className="mb-6">
-          <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-blue-500" />
+          <h3 className="text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-cyan-500" />
             {groupName}
-            <span className="text-xs font-normal text-gray-400">
+            <span className="text-xs font-normal text-gray-500">
               ({groupTemplates.length} {groupTemplates.length === 1 ? "step" : "steps"})
             </span>
           </h3>
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+          <div className="bg-[#111118] rounded-xl border border-[#1e1e2e] overflow-hidden">
+            <table className="min-w-full text-sm">
+              <thead className="bg-[#0d0d14] border-b border-[#1e1e2e]">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stage</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Platform</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Subject</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Active</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Stage</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Name</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Platform</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Subject</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Active</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-[#1e1e2e]">
                 {groupTemplates.map((template) => (
-                  <tr key={template.id} className="hover:bg-gray-50">
+                  <tr key={template.id} className="hover:bg-[#1a1a24] transition-colors">
                     <td className="px-4 py-3">
                       <span className="inline-flex items-center gap-1.5">
-                        <span className="inline-block w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-xs font-bold flex items-center justify-center leading-none text-center">
+                        <span className="inline-block w-5 h-5 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold flex items-center justify-center leading-none text-center border border-cyan-500/20">
                           {template.stage_number}
                         </span>
-                        <span className="text-xs text-gray-600">{template.stage_label}</span>
+                        <span className="text-xs text-gray-400">{template.stage_label}</span>
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900 font-medium">{template.name}</td>
+                    <td className="px-4 py-3 text-gray-200 font-medium">{template.name}</td>
                     <td className="px-4 py-3">
-                      <span className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${
+                      <span className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium border ${
                         template.platform === "instantly"
-                          ? "bg-purple-100 text-purple-800"
+                          ? "bg-violet-500/10 text-violet-400 border-violet-500/20"
                           : template.platform === "lemlist"
-                          ? "bg-orange-100 text-orange-800"
-                          : "bg-sky-100 text-sky-800"
+                          ? "bg-orange-500/10 text-orange-400 border-orange-500/20"
+                          : "bg-cyan-500/10 text-cyan-400 border-cyan-500/20"
                       }`}>
                         {template.platform}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600 max-w-xs truncate">
-                      {template.subject || "—"}
+                    <td className="px-4 py-3 text-gray-400 max-w-xs truncate">
+                      {template.subject || "\u2014"}
                     </td>
                     <td className="px-4 py-3">
                       <ToggleSwitch

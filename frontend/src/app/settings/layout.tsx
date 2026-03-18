@@ -9,14 +9,14 @@ const tabs = [
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Settings</h1>
-        <nav className="flex gap-1 border-b border-gray-200">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-100 mb-4">Settings</h1>
+        <nav className="flex gap-1 border-b border-[#1e1e2e]">
           {tabs.map((tab) => (
             <Link
               key={tab.href}
               href={tab.href}
-              className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 -mb-px transition-colors"
+              className="px-4 py-2.5 text-sm font-medium text-gray-400 hover:text-gray-200 border-b-2 border-transparent hover:border-cyan-500/50 -mb-px transition-all"
             >
               {tab.label}
             </Link>

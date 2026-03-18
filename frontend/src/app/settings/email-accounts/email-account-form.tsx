@@ -37,54 +37,54 @@ export function EmailAccountForm({
   };
 
   return (
-    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
-      <h3 className="text-sm font-semibold text-gray-900 mb-3">
+    <div className="bg-[#111118] border border-[#1e1e2e] rounded-xl p-4 mb-4">
+      <h3 className="text-sm font-semibold text-gray-200 mb-3">
         {account ? "Edit Email Account" : "Add Email Account"}
       </h3>
       {error && (
-        <div className="mb-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">{error}</div>
+        <div className="mb-3 text-sm text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-lg p-2">{error}</div>
       )}
       <form action={handleSubmit} className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Email Address</label>
+          <label className="block text-xs font-medium text-gray-400 mb-1">Email Address</label>
           <input
             name="email_address"
             type="email"
             required
             defaultValue={account?.email_address}
-            className="w-full text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full text-sm bg-[#0a0a0f] border border-[#2a2a3a] rounded-lg px-3 py-1.5 text-gray-200 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 placeholder-gray-600"
             placeholder="sender@company.com"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Display Name</label>
+          <label className="block text-xs font-medium text-gray-400 mb-1">Display Name</label>
           <input
             name="display_name"
             type="text"
             required
             defaultValue={account?.display_name}
-            className="w-full text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full text-sm bg-[#0a0a0f] border border-[#2a2a3a] rounded-lg px-3 py-1.5 text-gray-200 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 placeholder-gray-600"
             placeholder="John Smith"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Platform</label>
+          <label className="block text-xs font-medium text-gray-400 mb-1">Platform</label>
           <select
             name="platform"
             required
             defaultValue={account?.platform || "instantly"}
-            className="w-full text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
+            className="w-full text-sm bg-[#0a0a0f] border border-[#2a2a3a] rounded-lg px-3 py-1.5 text-gray-200 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500"
           >
             <option value="instantly">Instantly</option>
             <option value="lemlist">Lemlist</option>
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Warmup Status</label>
+          <label className="block text-xs font-medium text-gray-400 mb-1">Warmup Status</label>
           <select
             name="warmup_status"
             defaultValue={account?.warmup_status || "pending"}
-            className="w-full text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
+            className="w-full text-sm bg-[#0a0a0f] border border-[#2a2a3a] rounded-lg px-3 py-1.5 text-gray-200 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500"
           >
             <option value="pending">Pending</option>
             <option value="warming">Warming</option>
@@ -93,28 +93,28 @@ export function EmailAccountForm({
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-700 mb-1">Daily Send Limit</label>
+          <label className="block text-xs font-medium text-gray-400 mb-1">Daily Send Limit</label>
           <input
             name="daily_send_limit"
             type="number"
             min={1}
             max={500}
             defaultValue={account?.daily_send_limit || 30}
-            className="w-full text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full text-sm bg-[#0a0a0f] border border-[#2a2a3a] rounded-lg px-3 py-1.5 text-gray-200 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500"
           />
         </div>
         <div className="flex items-end gap-2">
           <button
             type="submit"
             disabled={isPending}
-            className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+            className="px-4 py-1.5 text-sm bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 disabled:opacity-50 transition-colors"
           >
             {isPending ? "Saving..." : account ? "Update" : "Add Account"}
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-1.5 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+            className="px-4 py-1.5 text-sm bg-[#1a1a24] text-gray-400 rounded-lg hover:bg-[#252533] border border-[#2a2a3a] transition-colors"
           >
             Cancel
           </button>
@@ -135,7 +135,7 @@ export function AddEmailAccountButton({ children }: { children: React.ReactNode 
     <button
       type="button"
       onClick={() => setIsOpen(true)}
-      className="mb-4 px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+      className="mb-4 px-4 py-2 text-sm bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-colors"
     >
       {children}
     </button>
@@ -153,7 +153,7 @@ export function EditEmailAccountButton({ account }: { account: EmailAccount }) {
     <button
       type="button"
       onClick={() => setIsEditing(true)}
-      className="text-xs text-blue-600 hover:text-blue-800"
+      className="text-xs text-cyan-400 hover:text-cyan-300"
     >
       Edit
     </button>

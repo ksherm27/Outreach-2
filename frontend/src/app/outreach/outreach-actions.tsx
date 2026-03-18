@@ -15,7 +15,7 @@ export function OutreachRowActions({ id, status }: { id: number; status: string 
   const [isPending, startTransition] = useTransition();
 
   if (status === "completed") {
-    return <span className="text-xs text-gray-400">Stopped</span>;
+    return <span className="text-xs text-gray-500">Stopped</span>;
   }
 
   return (
@@ -25,7 +25,7 @@ export function OutreachRowActions({ id, status }: { id: number; status: string 
           type="button"
           disabled={isPending}
           onClick={() => startTransition(async () => { await launchOutreachMessage(id); })}
-          className="px-2 py-0.5 text-xs bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+          className="px-2 py-0.5 text-xs bg-emerald-600 text-white rounded hover:bg-emerald-500 disabled:opacity-50 transition-colors"
         >
           {isPending ? "..." : "Launch"}
         </button>
@@ -35,7 +35,7 @@ export function OutreachRowActions({ id, status }: { id: number; status: string 
           type="button"
           disabled={isPending}
           onClick={() => startTransition(async () => { await pauseOutreachMessage(id); })}
-          className="px-2 py-0.5 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600 disabled:opacity-50"
+          className="px-2 py-0.5 text-xs bg-amber-600 text-white rounded hover:bg-amber-500 disabled:opacity-50 transition-colors"
         >
           {isPending ? "..." : "Pause"}
         </button>
@@ -45,7 +45,7 @@ export function OutreachRowActions({ id, status }: { id: number; status: string 
           type="button"
           disabled={isPending}
           onClick={() => startTransition(async () => { await resumeOutreachMessage(id); })}
-          className="px-2 py-0.5 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+          className="px-2 py-0.5 text-xs bg-cyan-600 text-white rounded hover:bg-cyan-500 disabled:opacity-50 transition-colors"
         >
           {isPending ? "..." : "Resume"}
         </button>
@@ -54,7 +54,7 @@ export function OutreachRowActions({ id, status }: { id: number; status: string 
         type="button"
         disabled={isPending}
         onClick={() => startTransition(async () => { await stopOutreachMessage(id); })}
-        className="px-2 py-0.5 text-xs bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+        className="px-2 py-0.5 text-xs bg-rose-600 text-white rounded hover:bg-rose-500 disabled:opacity-50 transition-colors"
       >
         {isPending ? "..." : "Stop"}
       </button>
@@ -101,20 +101,20 @@ export function BulkActions({
       stop: "Stop all active messages? This cannot be undone.",
     };
     return (
-      <div className="flex items-center gap-2 mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-        <span className="text-sm text-yellow-800">{labels[confirming]}</span>
+      <div className="flex items-center gap-2 mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl">
+        <span className="text-sm text-amber-400">{labels[confirming]}</span>
         <button
           type="button"
           disabled={isPending}
           onClick={() => handleAction(confirming)}
-          className="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+          className="px-3 py-1 text-xs bg-rose-600 text-white rounded-lg hover:bg-rose-500 disabled:opacity-50 transition-colors"
         >
           {isPending ? "Processing..." : "Confirm"}
         </button>
         <button
           type="button"
           onClick={() => setConfirming(null)}
-          className="px-3 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+          className="px-3 py-1 text-xs bg-[#1a1a24] text-gray-400 rounded-lg hover:bg-[#252533] border border-[#2a2a3a] transition-colors"
         >
           Cancel
         </button>
@@ -129,7 +129,7 @@ export function BulkActions({
         <button
           type="button"
           onClick={() => setConfirming("pause")}
-          className="px-3 py-1 text-xs bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 border border-yellow-300"
+          className="px-3 py-1 text-xs bg-amber-500/10 text-amber-400 rounded-lg hover:bg-amber-500/20 border border-amber-500/20 transition-colors"
         >
           Pause All ({launchedCount})
         </button>
@@ -138,7 +138,7 @@ export function BulkActions({
         <button
           type="button"
           onClick={() => setConfirming("resume")}
-          className="px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded hover:bg-blue-200 border border-blue-300"
+          className="px-3 py-1 text-xs bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20 border border-cyan-500/20 transition-colors"
         >
           Resume All ({pausedCount})
         </button>
@@ -146,12 +146,12 @@ export function BulkActions({
       <button
         type="button"
         onClick={() => setConfirming("stop")}
-        className="px-3 py-1 text-xs bg-red-100 text-red-800 rounded hover:bg-red-200 border border-red-300"
+        className="px-3 py-1 text-xs bg-rose-500/10 text-rose-400 rounded-lg hover:bg-rose-500/20 border border-rose-500/20 transition-colors"
       >
         Stop All
       </button>
       {result && (
-        <span className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded">{result}</span>
+        <span className="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20">{result}</span>
       )}
     </div>
   );

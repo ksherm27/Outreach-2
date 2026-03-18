@@ -14,13 +14,13 @@ export function AutomationToggle({ initialEnabled }: { initialEnabled: boolean }
   const [enabled, setEnabled] = useState(initialEnabled);
 
   return (
-    <div className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg">
+    <div className="flex items-center gap-3 p-3 bg-[#111118] border border-[#1e1e2e] rounded-xl">
       <div className="flex-1">
-        <p className="text-sm font-medium text-gray-900">Automated Scraping</p>
+        <p className="text-sm font-medium text-gray-200">Automated Scraping</p>
         <p className="text-xs text-gray-500">
           {enabled
             ? "Scraping runs automatically every 6 hours via Celery Beat"
-            : "Automation is off — use manual triggers below to run scrapes"}
+            : "Automation is off \u2014 use manual triggers below to run scrapes"}
         </p>
       </div>
       <button
@@ -33,7 +33,7 @@ export function AutomationToggle({ initialEnabled }: { initialEnabled: boolean }
           })
         }
         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-          enabled ? "bg-green-500" : "bg-gray-300"
+          enabled ? "bg-emerald-500" : "bg-[#2a2a3a]"
         } ${isPending ? "opacity-50" : ""}`}
       >
         <span
@@ -68,14 +68,14 @@ export function ManualScrapeControls() {
   };
 
   return (
-    <div className="p-3 bg-white border border-gray-200 rounded-lg">
-      <p className="text-sm font-medium text-gray-900 mb-2">Manual Scrape</p>
+    <div className="p-3 bg-[#111118] border border-[#1e1e2e] rounded-xl">
+      <p className="text-sm font-medium text-gray-200 mb-2">Manual Scrape</p>
       <div className="flex items-center gap-2 flex-wrap">
         <button
           type="button"
           disabled={isPending}
           onClick={() => handleTrigger()}
-          className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+          className="px-4 py-1.5 text-sm bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 disabled:opacity-50 transition-colors"
         >
           {isPending ? "Queuing..." : "Run All Boards"}
         </button>
@@ -83,12 +83,12 @@ export function ManualScrapeControls() {
           type="button"
           disabled={isPending}
           onClick={() => setShowBoardPicker(!showBoardPicker)}
-          className="px-4 py-1.5 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 border border-gray-300"
+          className="px-4 py-1.5 text-sm bg-[#1a1a24] text-gray-400 rounded-lg hover:bg-[#252533] border border-[#2a2a3a] transition-colors"
         >
           Run Single Board
         </button>
         {result && (
-          <span className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded">{result}</span>
+          <span className="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20">{result}</span>
         )}
       </div>
       {showBoardPicker && (
@@ -99,7 +99,7 @@ export function ManualScrapeControls() {
               type="button"
               disabled={isPending}
               onClick={() => handleTrigger(board)}
-              className="px-2.5 py-1 text-xs bg-gray-50 text-gray-700 rounded border border-gray-200 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 disabled:opacity-50"
+              className="px-2.5 py-1 text-xs bg-[#1a1a24] text-gray-400 rounded-lg border border-[#2a2a3a] hover:bg-cyan-500/10 hover:text-cyan-400 hover:border-cyan-500/20 disabled:opacity-50 transition-colors"
             >
               {board}
             </button>
@@ -107,13 +107,13 @@ export function ManualScrapeControls() {
         </div>
       )}
 
-      <div className="mt-3 p-2 bg-gray-50 rounded border border-gray-100">
+      <div className="mt-3 p-2 bg-[#0d0d14] rounded-lg border border-[#1e1e2e]">
         <p className="text-xs text-gray-500 font-medium mb-1">Standalone CLI</p>
-        <code className="text-xs text-gray-700 font-mono">
+        <code className="text-xs text-cyan-400 font-mono">
           python3 scripts/run_once.py scrape
         </code>
-        <p className="text-xs text-gray-400 mt-1">
-          Run directly from terminal for testing. Also supports: <code className="font-mono">score</code>, <code className="font-mono">poll</code>, <code className="font-mono">full</code>
+        <p className="text-xs text-gray-500 mt-1">
+          Run directly from terminal for testing. Also supports: <code className="font-mono text-cyan-400/70">score</code>, <code className="font-mono text-cyan-400/70">poll</code>, <code className="font-mono text-cyan-400/70">full</code>
         </p>
       </div>
     </div>

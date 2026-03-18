@@ -32,7 +32,6 @@ export default async function OverviewPage() {
     ? ((positiveReplies / totalReplies) * 100).toFixed(1)
     : "0";
 
-  // Recent replies
   const recentReplies = await prisma.replies.findMany({
     take: 10,
     orderBy: { received_at: "desc" },
@@ -41,9 +40,9 @@ export default async function OverviewPage() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Overview</h2>
+      <h2 className="text-2xl font-bold mb-8 text-gray-100">Overview</h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
         <StatCard title="Total Jobs Scraped" value={totalJobs} color="blue" />
         <StatCard title="Qualified Leads" value={qualifiedJobs} color="green" />
         <StatCard title="Contacts" value={totalContacts} color="purple" />
@@ -54,40 +53,40 @@ export default async function OverviewPage() {
         <StatCard title="Suppressed" value={suppressedCount} color="red" />
       </div>
 
-      <h3 className="text-lg font-semibold mb-3">Recent Replies</h3>
+      <h3 className="text-lg font-semibold mb-4 text-gray-200">Recent Replies</h3>
       {recentReplies.length === 0 ? (
         <p className="text-sm text-gray-500">No replies yet.</p>
       ) : (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <div className="bg-[#111118] rounded-xl border border-[#1e1e2e] overflow-hidden">
           <table className="min-w-full text-sm">
-            <thead className="bg-gray-50 border-b">
+            <thead className="bg-[#0d0d14] border-b border-[#1e1e2e]">
               <tr>
-                <th className="px-4 py-2 text-left font-medium text-gray-600">Contact</th>
-                <th className="px-4 py-2 text-left font-medium text-gray-600">Company</th>
-                <th className="px-4 py-2 text-left font-medium text-gray-600">Type</th>
-                <th className="px-4 py-2 text-left font-medium text-gray-600">Received</th>
+                <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Contact</th>
+                <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Company</th>
+                <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Type</th>
+                <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Received</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-[#1e1e2e]">
               {recentReplies.map((r) => (
-                <tr key={r.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2">
+                <tr key={r.id} className="hover:bg-[#1a1a24] transition-colors">
+                  <td className="px-4 py-3 text-gray-200">
                     {r.contact.first_name} {r.contact.last_name}
                   </td>
-                  <td className="px-4 py-2 text-gray-600">
-                    {r.contact.company?.name ?? "—"}
+                  <td className="px-4 py-3 text-gray-400">
+                    {r.contact.company?.name ?? "\u2014"}
                   </td>
-                  <td className="px-4 py-2">
-                    <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${
-                      r.reply_type === "positive" ? "bg-green-100 text-green-700" :
-                      r.reply_type === "objection" ? "bg-yellow-100 text-yellow-700" :
-                      r.reply_type === "unsubscribe" ? "bg-red-100 text-red-700" :
-                      "bg-gray-100 text-gray-700"
+                  <td className="px-4 py-3">
+                    <span className={`inline-flex px-2.5 py-0.5 rounded-md text-xs font-medium border ${
+                      r.reply_type === "positive" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" :
+                      r.reply_type === "objection" ? "bg-amber-500/10 text-amber-400 border-amber-500/20" :
+                      r.reply_type === "unsubscribe" ? "bg-rose-500/10 text-rose-400 border-rose-500/20" :
+                      "bg-gray-500/10 text-gray-400 border-gray-500/20"
                     }`}>
                       {r.reply_type ?? "pending"}
                     </span>
                   </td>
-                  <td className="px-4 py-2 text-gray-500">
+                  <td className="px-4 py-3 text-gray-500">
                     {new Date(r.received_at).toLocaleDateString()}
                   </td>
                 </tr>

@@ -35,7 +35,7 @@ export default async function RepliesPage({
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Replies</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-100">Replies</h2>
 
       <div className="grid grid-cols-4 gap-4 mb-6">
         <StatCard title="Positive" value={positive} color="green" />
@@ -45,37 +45,37 @@ export default async function RepliesPage({
       </div>
 
       <div className="flex gap-2 mb-4 flex-wrap">
-        <a href="/replies" className={`px-3 py-1 rounded text-sm ${!params.type ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-700'}`}>All ({total})</a>
+        <a href="/replies" className={`px-3 py-1 rounded text-sm ${!params.type ? 'bg-cyan-600/10 text-cyan-400 border border-cyan-500/30' : 'bg-[#1a1a24] text-gray-400 border border-[#2a2a3a] hover:text-gray-200 hover:bg-[#252533]'}`}>All ({total})</a>
         {["positive", "objection", "ooo_with_date", "ooo_no_date", "unsubscribe", "other"].map(t => (
-          <a key={t} href={`/replies?type=${t}`} className={`px-3 py-1 rounded text-sm ${params.type === t ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}>{t.replace(/_/g, " ")}</a>
+          <a key={t} href={`/replies?type=${t}`} className={`px-3 py-1 rounded text-sm ${params.type === t ? 'bg-cyan-600/10 text-cyan-400 border border-cyan-500/30' : 'bg-[#1a1a24] text-gray-400 border border-[#2a2a3a] hover:text-gray-200 hover:bg-[#252533]'}`}>{t.replace(/_/g, " ")}</a>
         ))}
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="bg-[#111118] rounded-xl border border-[#1e1e2e] overflow-hidden">
         <table className="min-w-full text-sm">
-          <thead className="bg-gray-50 border-b">
+          <thead className="bg-[#0d0d14] border-b border-[#1e1e2e]">
             <tr>
-              <th className="px-4 py-2 text-left font-medium text-gray-600">Contact</th>
-              <th className="px-4 py-2 text-left font-medium text-gray-600">Company</th>
-              <th className="px-4 py-2 text-left font-medium text-gray-600">Type</th>
-              <th className="px-4 py-2 text-left font-medium text-gray-600">Confidence</th>
-              <th className="px-4 py-2 text-left font-medium text-gray-600">Subject</th>
-              <th className="px-4 py-2 text-left font-medium text-gray-600">Action</th>
-              <th className="px-4 py-2 text-left font-medium text-gray-600">Received</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Contact</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Company</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Type</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Confidence</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Subject</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Action</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Received</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-[#1e1e2e]">
             {replies.map((r) => (
-              <tr key={r.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2">{r.contact.first_name} {r.contact.last_name}</td>
-                <td className="px-4 py-2 text-gray-600">{r.contact.company?.name ?? "—"}</td>
+              <tr key={r.id} className="hover:bg-[#1a1a24] transition-colors">
+                <td className="px-4 py-2 text-gray-200">{r.contact.first_name} {r.contact.last_name}</td>
+                <td className="px-4 py-2 text-gray-400">{r.contact.company?.name ?? "—"}</td>
                 <td className="px-4 py-2">
                   <Badge label={r.reply_type ?? "pending"} variant={replyTypeBadgeVariant(r.reply_type)} />
                 </td>
                 <td className="px-4 py-2 text-gray-500">
                   {r.classification_confidence ? `${(r.classification_confidence * 100).toFixed(0)}%` : "—"}
                 </td>
-                <td className="px-4 py-2 text-gray-600 max-w-[200px] truncate">{r.subject ?? "—"}</td>
+                <td className="px-4 py-2 text-gray-400 max-w-[200px] truncate">{r.subject ?? "—"}</td>
                 <td className="px-4 py-2 text-gray-500">{r.action_taken ?? "—"}</td>
                 <td className="px-4 py-2 text-gray-500">{new Date(r.received_at).toLocaleDateString()}</td>
               </tr>
@@ -86,9 +86,9 @@ export default async function RepliesPage({
 
       {totalPages > 1 && (
         <div className="flex gap-2 mt-4 justify-center">
-          {page > 1 && <a href={`/replies?page=${page - 1}${params.type ? `&type=${params.type}` : ''}`} className="px-3 py-1 bg-gray-100 rounded text-sm">Previous</a>}
+          {page > 1 && <a href={`/replies?page=${page - 1}${params.type ? `&type=${params.type}` : ''}`} className="px-3 py-1 bg-[#1a1a24] text-gray-400 border border-[#2a2a3a] rounded-lg text-sm hover:text-gray-200 hover:bg-[#252533]">Previous</a>}
           <span className="px-3 py-1 text-sm text-gray-500">Page {page} of {totalPages}</span>
-          {page < totalPages && <a href={`/replies?page=${page + 1}${params.type ? `&type=${params.type}` : ''}`} className="px-3 py-1 bg-gray-100 rounded text-sm">Next</a>}
+          {page < totalPages && <a href={`/replies?page=${page + 1}${params.type ? `&type=${params.type}` : ''}`} className="px-3 py-1 bg-[#1a1a24] text-gray-400 border border-[#2a2a3a] rounded-lg text-sm hover:text-gray-200 hover:bg-[#252533]">Next</a>}
         </div>
       )}
     </div>

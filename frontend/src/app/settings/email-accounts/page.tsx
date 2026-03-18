@@ -15,20 +15,20 @@ export default async function EmailAccountsPage() {
     <div>
       <AddEmailAccountButton>+ Add Email Account</AddEmailAccountButton>
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="bg-[#111118] rounded-xl border border-[#1e1e2e] overflow-hidden">
+        <table className="min-w-full text-sm">
+          <thead className="bg-[#0d0d14] border-b border-[#1e1e2e]">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Display Name</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Platform</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Warmup</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Daily Limit</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Active</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Email</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Display Name</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Platform</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Warmup</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Daily Limit</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Active</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-[#1e1e2e]">
             {accounts.length === 0 && (
               <tr>
                 <td colSpan={7} className="px-4 py-8 text-center text-sm text-gray-500">
@@ -37,32 +37,32 @@ export default async function EmailAccountsPage() {
               </tr>
             )}
             {accounts.map((account) => (
-              <tr key={account.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3 text-sm text-gray-900 font-medium">{account.email_address}</td>
-                <td className="px-4 py-3 text-sm text-gray-600">{account.display_name}</td>
+              <tr key={account.id} className="hover:bg-[#1a1a24] transition-colors">
+                <td className="px-4 py-3 text-gray-200 font-medium">{account.email_address}</td>
+                <td className="px-4 py-3 text-gray-400">{account.display_name}</td>
                 <td className="px-4 py-3">
-                  <span className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${
+                  <span className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium border ${
                     account.platform === "instantly"
-                      ? "bg-purple-100 text-purple-800"
-                      : "bg-orange-100 text-orange-800"
+                      ? "bg-violet-500/10 text-violet-400 border-violet-500/20"
+                      : "bg-orange-500/10 text-orange-400 border-orange-500/20"
                   }`}>
                     {account.platform}
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${
+                  <span className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium border ${
                     account.warmup_status === "warmed"
-                      ? "bg-green-100 text-green-800"
+                      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                       : account.warmup_status === "warming"
-                      ? "bg-yellow-100 text-yellow-800"
+                      ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
                       : account.warmup_status === "paused"
-                      ? "bg-red-100 text-red-800"
-                      : "bg-gray-100 text-gray-800"
+                      ? "bg-rose-500/10 text-rose-400 border-rose-500/20"
+                      : "bg-gray-500/10 text-gray-400 border-gray-500/20"
                   }`}>
                     {account.warmup_status}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm text-gray-600">{account.daily_send_limit}</td>
+                <td className="px-4 py-3 text-gray-400">{account.daily_send_limit}</td>
                 <td className="px-4 py-3">
                   <ToggleSwitch
                     isActive={account.is_active}

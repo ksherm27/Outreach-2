@@ -15,20 +15,20 @@ export default async function UsersPage() {
     <div>
       <AddUserButton>+ Add User</AddUserButton>
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="bg-[#111118] rounded-xl border border-[#1e1e2e] overflow-hidden">
+        <table className="min-w-full text-sm">
+          <thead className="bg-[#0d0d14] border-b border-[#1e1e2e]">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Slack ID</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Assignments</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Active</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Name</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Email</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Role</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Slack ID</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Assignments</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Active</th>
+              <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-wider text-gray-500">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-[#1e1e2e]">
             {users.length === 0 && (
               <tr>
                 <td colSpan={7} className="px-4 py-8 text-center text-sm text-gray-500">
@@ -37,22 +37,22 @@ export default async function UsersPage() {
               </tr>
             )}
             {users.map((user) => (
-              <tr key={user.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3 text-sm text-gray-900 font-medium">{user.name}</td>
-                <td className="px-4 py-3 text-sm text-gray-600">{user.email}</td>
+              <tr key={user.id} className="hover:bg-[#1a1a24] transition-colors">
+                <td className="px-4 py-3 text-gray-200 font-medium">{user.name}</td>
+                <td className="px-4 py-3 text-gray-400">{user.email}</td>
                 <td className="px-4 py-3">
-                  <span className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium ${
+                  <span className={`inline-block px-2 py-0.5 text-xs rounded-full font-medium border ${
                     user.role === "admin"
-                      ? "bg-red-100 text-red-800"
+                      ? "bg-rose-500/10 text-rose-400 border-rose-500/20"
                       : user.role === "recruiter"
-                      ? "bg-blue-100 text-blue-800"
-                      : "bg-gray-100 text-gray-800"
+                      ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/20"
+                      : "bg-gray-500/10 text-gray-400 border-gray-500/20"
                   }`}>
                     {user.role}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm text-gray-600 font-mono">{user.slack_id || "—"}</td>
-                <td className="px-4 py-3 text-sm text-gray-600">{user.assignment_count}</td>
+                <td className="px-4 py-3 text-gray-400 font-mono">{user.slack_id || "\u2014"}</td>
+                <td className="px-4 py-3 text-gray-400">{user.assignment_count}</td>
                 <td className="px-4 py-3">
                   <ToggleSwitch
                     isActive={user.is_active}
