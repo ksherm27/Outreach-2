@@ -50,7 +50,7 @@ class BambooHRScraper(BaseScraper):
 
             for result in data.get("result", []):
                 title = result.get("jobOpeningName", "")
-                if not any(kw.lower() in title.lower() for kw in title_keywords):
+                if not self._is_gtm_title(title):
                     continue
 
                 location = result.get("location", {}).get("city", "")

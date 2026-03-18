@@ -56,7 +56,7 @@ class SmartRecruitersScraper(BaseScraper):
 
                 for posting in content:
                     title = posting.get("name", "")
-                    if not any(kw.lower() in title.lower() for kw in title_keywords):
+                    if not self._is_gtm_title(title):
                         continue
 
                     location_data = posting.get("location", {})

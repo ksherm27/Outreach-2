@@ -100,6 +100,26 @@ class BaseScraper(ABC):
         except httpx.RequestError as e:
             raise ScraperError(f"Request failed for {url}: {e}") from e
 
+    # Broad GTM-relevant keywords for filtering job titles from company boards.
+    # The full search_queries ("VP Sales SaaS") are too specific for title matching.
+    GTM_TITLE_KEYWORDS = [
+        "sales", "marketing", "revenue", "gtm", "go-to-market", "go to market",
+        "growth", "demand gen", "demand generation", "business development",
+        "partnerships", "partner", "alliances", "customer success",
+        "account executive", "account manager", "sdr", "bdr",
+        "field sales", "enterprise sales", "commercial", "channel",
+        "enablement", "sales engineer", "solutions engineer",
+        "pre-sales", "presales", "customer acquisition",
+        "head of sales", "vp sales", "vp marketing", "vp revenue",
+        "director of sales", "director of marketing", "director of revenue",
+        "cro", "cmo", "chief revenue", "chief marketing",
+    ]
+
+    def _is_gtm_title(self, title: str) -> bool:
+        """Check if a job title is GTM-relevant using broad keyword matching."""
+        title_lower = title.lower()
+        return any(kw in title_lower for kw in self.GTM_TITLE_KEYWORDS)
+
     @abstractmethod
     def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:
         """Scrape the board for jobs matching the search queries."""

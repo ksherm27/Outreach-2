@@ -55,7 +55,7 @@ class LeverScraper(BaseScraper):
 
             for posting in postings:
                 title = posting.get("text", "")
-                if not any(kw.lower() in title.lower() for kw in title_keywords):
+                if not self._is_gtm_title(title):
                     continue
 
                 location = ""

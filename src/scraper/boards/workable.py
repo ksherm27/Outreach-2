@@ -49,7 +49,7 @@ class WorkableScraper(BaseScraper):
 
             for job_data in data.get("jobs", []):
                 title = job_data.get("title", "")
-                if not any(kw.lower() in title.lower() for kw in title_keywords):
+                if not self._is_gtm_title(title):
                     continue
 
                 job_url = job_data.get("url", "")

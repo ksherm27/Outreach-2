@@ -50,7 +50,7 @@ class RecruiterboxScraper(BaseScraper):
             openings = data if isinstance(data, list) else data.get("objects", [])
             for opening in openings:
                 title = opening.get("title", "")
-                if not any(kw.lower() in title.lower() for kw in title_keywords):
+                if not self._is_gtm_title(title):
                     continue
 
                 location = opening.get("location", {})

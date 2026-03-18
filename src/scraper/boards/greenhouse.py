@@ -53,7 +53,7 @@ class GreenhouseScraper(BaseScraper):
 
             for job_data in data.get("jobs", []):
                 title = job_data.get("title", "")
-                if not self._matches_keywords(title, title_keywords):
+                if not self._is_gtm_title(title):
                     continue
 
                 location = ""
@@ -86,10 +86,6 @@ class GreenhouseScraper(BaseScraper):
 
         logger.info("greenhouse_board_scraped", board_token=board_token, jobs_found=len(jobs))
         return jobs
-
-    def _matches_keywords(self, title: str, keywords: list[str]) -> bool:
-        title_lower = title.lower()
-        return any(kw.lower() in title_lower for kw in keywords)
 
     def _extract_description(self, job_data: dict) -> str:
         content = job_data.get("content", "")
