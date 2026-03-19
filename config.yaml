@@ -53,6 +53,14 @@ scraping:
         - salesloft
         - verkada
         - tripactions
+        # AI companies
+        - scaleai          # 165 jobs (AI data platform)
+        - hebbia           # 25 jobs (AI knowledge work)
+        - figureai         # 95 jobs (AI robotics)
+        - deepmind         # 104 jobs (Google DeepMind)
+        - andurilindustries # 1686 jobs (AI defense)
+        - waymo            # 425 jobs (AI autonomous vehicles)
+        - nuro             # 108 jobs (AI delivery robots)
         # Newly verified high-volume companies
         - mongodb          # 406 jobs
         - cloudflare       # 556 jobs
@@ -74,6 +82,18 @@ scraping:
       enabled: true
       company_slugs:
         - neon
+        # High GTM volume
+        - spotify           # 35 GTM roles
+        - plaid             # 34 GTM roles
+        - mistral           # 25 GTM roles (AI)
+        - outreach          # 16 GTM roles
+        - palantir          # 12 GTM roles (AI/data)
+        - mindtickle        # 10 GTM roles
+        - activecampaign    # 3 GTM roles
+        - zilliz            # 4 GTM roles (AI vector DB)
+        - people-ai         # 2 GTM roles (AI)
+        - omnisend          # 4 GTM roles
+        - shieldai          # 249 jobs (AI defense/autonomy)
     ashby:
       enabled: true
       company_slugs:
@@ -111,6 +131,11 @@ scraping:
         - posthog          # 17 jobs
         - airbyte          # 7 jobs
         - statsig          # 7 jobs
+        # AI companies
+        - cursor           # 58 jobs (AI code editor / Anysphere)
+        - harvey           # 202 jobs (AI for legal)
+        - sierra           # 143 jobs (AI customer experience)
+        - skydio           # 108 jobs (AI drones)
     workday:
       enabled: false
       company_slugs: []
