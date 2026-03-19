@@ -24,7 +24,7 @@ scraping:
     greenhouse:
       enabled: true
       company_slugs:
-        # Verified working Greenhouse board tokens (Series A-D+ VC-funded)
+        # Original verified (28 companies)
         - figma
         - gusto
         - airtable
@@ -53,15 +53,31 @@ scraping:
         - salesloft
         - verkada
         - tripactions
+        # Newly verified high-volume companies
+        - mongodb          # 406 jobs
+        - cloudflare       # 556 jobs
+        - okta             # 365 jobs
+        - zscaler          # 294 jobs
+        - elastic          # 221 jobs
+        - braze            # 163 jobs
+        - twilio           # 138 jobs
+        - contentful       # 110 jobs
+        - vercel           # 78 jobs
+        - amplitude        # 55 jobs
+        - mixpanel         # 47 jobs
+        - pagerduty        # 45 jobs
+        - iterable         # 41 jobs
+        - showpad          # 14 jobs
+        - planetscale      # 5 jobs
+        - netlify          # 2 jobs
     lever:
       enabled: true
       company_slugs:
-        # Verified working Lever slugs
         - neon
     ashby:
       enabled: true
       company_slugs:
-        # Verified working Ashby board slugs (Series A-D+ VC-funded)
+        # Original verified (23 companies)
         - ramp
         - linear
         - notion
@@ -85,44 +101,42 @@ scraping:
         - prefect
         - modal
         - render
+        # Newly verified
+        - plaid            # 94 jobs
+        - replit           # 82 jobs
+        - perplexity       # 80 jobs
+        - sentry           # 37 jobs
+        - livekit          # 19 jobs
+        - oyster           # 18 jobs
+        - posthog          # 17 jobs
+        - airbyte          # 7 jobs
+        - statsig          # 7 jobs
     workday:
       enabled: false
       company_slugs: []
     bamboohr:
-      enabled: true
-      company_slugs:
-        - lattice
-        - chili-piper
-        - sendoso
-        - salesloft
-        - clari
-        - gorgias
-        - chorus
+      enabled: false  # All company slugs redirect to bamboohr.com — companies migrated
+      company_slugs: []
     rippling:
       enabled: false
       company_slugs: []
     smartrecruiters:
       enabled: true
       company_slugs:
-        - Samsara
-        - Docusign
-        - Smartrecruiters
+        - DocuSign
+        - Canva
+        - Gong
+        - BigCommerce
     jobvite:
-      enabled: true
-      company_slugs:
-        - talend
-        - zuora
+      enabled: false  # Companies migrated — slugs redirect to invalid page
+      company_slugs: []
     icims:
       enabled: false
       company_slugs: []
     workable:
       enabled: true
       company_slugs:
-        - personio
-        - paddle
-        - remote
-        - testgorilla
-        - recruitee
+        - oysterhr
     jazzhr:
       enabled: false
       company_slugs: []
