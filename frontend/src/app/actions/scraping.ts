@@ -2,6 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { exec } from "child_process";
+import path from "path";
 
 const AUTOMATION_KEY = "scraping_automation_enabled";
 
@@ -27,27 +29,53 @@ export async function toggleAutomation() {
 }
 
 export async function triggerScrapeRun(boardName?: string) {
-  // Create a queued scrape run record. The backend worker picks these up.
-  // If no board specified, create one for each enabled board.
-  const boards = boardName ? [boardName] : await getEnabledBoards();
+  // Spawn the Python scraper as a background process.
+  // The script writes results directly to the shared Railway database.
+  const projectRoot = path.resolve(process.cwd(), "..");
+  const scriptPath = path.join(projectRoot, "scripts", "run_once.py");
 
-  const runs = [];
-  for (const board of boards) {
-    const run = await prisma.scrape_runs.create({
-      data: {
-        board_name: board,
-        status: "queued",
-        jobs_found: 0,
-        jobs_new: 0,
-        jobs_duplicate: 0,
-        started_at: new Date(),
-      },
+  try {
+    const command = `cd "${projectRoot}" && python3 "${scriptPath}" scrape`;
+
+    // Fire-and-forget: spawn the process in the background
+    exec(command, { timeout: 600_000 }, (error, stdout, stderr) => {
+      if (error) {
+        console.error("[scrape] Process error:", error.message);
+      }
+      if (stdout) {
+        console.log("[scrape] Output:", stdout);
+      }
+      if (stderr) {
+        console.error("[scrape] Stderr:", stderr);
+      }
     });
-    runs.push(run);
-  }
 
-  revalidatePath("/scrape-runs");
-  return { success: true, count: runs.length, boards };
+    revalidatePath("/scrape-runs");
+    return {
+      success: true,
+      message: "Scraping all boards in background — refresh in a few minutes to see results.",
+    };
+  } catch {
+    // Fallback: on Vercel or if python is unavailable, just create queued records
+    const boards = boardName ? [boardName] : await getEnabledBoards();
+    for (const board of boards) {
+      await prisma.scrape_runs.create({
+        data: {
+          board_name: board,
+          status: "queued",
+          jobs_found: 0,
+          jobs_new: 0,
+          jobs_duplicate: 0,
+          started_at: new Date(),
+        },
+      });
+    }
+    revalidatePath("/scrape-runs");
+    return {
+      success: true,
+      message: `Queued ${boards.length} boards — run "python3 scripts/run_once.py scrape" locally to execute.`,
+    };
+  }
 }
 
 async function getEnabledBoards(): Promise<string[]> {

@@ -57,12 +57,8 @@ export function ManualScrapeControls() {
     startTransition(async () => {
       const res = await triggerScrapeRun(board);
       if (res.success) {
-        setResult(
-          board
-            ? `Queued scrape for ${board}`
-            : `Queued scrapes for ${res.count} boards`
-        );
-        setTimeout(() => setResult(null), 5000);
+        setResult(res.message);
+        setTimeout(() => setResult(null), 10000);
       }
     });
   };
