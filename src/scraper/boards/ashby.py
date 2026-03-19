@@ -50,10 +50,10 @@ class AshbyScraper(BaseScraper):
 
             for job_data in data.get("jobs", []):
                 title = job_data.get("title", "")
-                if not self._is_gtm_title(title):
-                    continue
-
                 location = job_data.get("location", "")
+
+                if not self._should_include_job(title, board_slug, location):
+                    continue
                 job_url = job_data.get("jobUrl", "")
                 if not job_url:
                     continue

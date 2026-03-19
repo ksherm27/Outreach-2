@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { toggleAutomation, triggerScrapeRun } from "@/app/actions/scraping";
+import { toggleAutomation, triggerScrapeRun, clearScrapedJobs } from "@/app/actions/scraping";
 
 const ALL_BOARDS = [
   "greenhouse", "lever", "ashby", "workable", "smartrecruiters",
@@ -116,6 +116,61 @@ export function ManualScrapeControls() {
           Run directly from terminal for testing. Also supports: <code className="font-mono text-cyan-400/70">score</code>, <code className="font-mono text-cyan-400/70">poll</code>, <code className="font-mono text-cyan-400/70">full</code>
         </p>
       </div>
+    </div>
+  );
+}
+
+export function ClearJobsButton() {
+  const [isPending, startTransition] = useTransition();
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+
+  const handleClear = () => {
+    startTransition(async () => {
+      const res = await clearScrapedJobs();
+      if (res.success) {
+        setShowConfirm(false);
+        setResult(`Cleared ${res.jobsDeleted} jobs and ${res.runsDeleted} runs`);
+        setTimeout(() => setResult(null), 5000);
+      }
+    });
+  };
+
+  return (
+    <div className="p-3 bg-[#111118] border border-[#1e1e2e] rounded-xl">
+      <p className="text-sm font-medium text-gray-200 mb-2">Clear Data</p>
+      {!showConfirm ? (
+        <button
+          type="button"
+          onClick={() => setShowConfirm(true)}
+          className="px-4 py-1.5 text-sm bg-rose-600/20 text-rose-400 rounded-lg hover:bg-rose-600/30 border border-rose-500/20 transition-colors"
+        >
+          Clear All Scraped Jobs
+        </button>
+      ) : (
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-rose-400">Delete all jobs and run history?</span>
+          <button
+            type="button"
+            disabled={isPending}
+            onClick={handleClear}
+            className="px-3 py-1.5 text-sm bg-rose-600 text-white rounded-lg hover:bg-rose-500 disabled:opacity-50 transition-colors"
+          >
+            {isPending ? "Clearing..." : "Yes, Clear All"}
+          </button>
+          <button
+            type="button"
+            disabled={isPending}
+            onClick={() => setShowConfirm(false)}
+            className="px-3 py-1.5 text-sm bg-[#1a1a24] text-gray-400 rounded-lg hover:bg-[#252533] border border-[#2a2a3a] transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+      {result && (
+        <span className="mt-2 inline-block text-xs text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20">{result}</span>
+      )}
     </div>
   );
 }

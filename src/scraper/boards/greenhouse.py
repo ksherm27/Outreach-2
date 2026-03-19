@@ -53,12 +53,13 @@ class GreenhouseScraper(BaseScraper):
 
             for job_data in data.get("jobs", []):
                 title = job_data.get("title", "")
-                if not self._is_gtm_title(title):
-                    continue
 
                 location = ""
                 if job_data.get("location"):
                     location = job_data["location"].get("name", "")
+
+                if not self._should_include_job(title, board_token, location):
+                    continue
 
                 posted_date = None
                 if job_data.get("updated_at"):

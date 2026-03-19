@@ -53,7 +53,7 @@ class JazzHRScraper(BaseScraper):
 
             for link in job_links:
                 title = link.get_text(strip=True)
-                if not self._is_gtm_title(title):
+                if not self._should_include_job(title, company_slug, ""):
                     continue
 
                 href = link.get("href", "")

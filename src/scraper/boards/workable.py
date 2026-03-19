@@ -56,11 +56,6 @@ class WorkableScraper(BaseScraper):
 
             for job_data in data.get("results", []):
                 title = job_data.get("title", "")
-                if not self._is_gtm_title(title):
-                    continue
-
-                shortcode = job_data.get("shortcode", "")
-                job_url = f"https://apply.workable.com/{company_slug}/j/{shortcode}/"
 
                 location_parts = []
                 if job_data.get("city"):
@@ -68,6 +63,12 @@ class WorkableScraper(BaseScraper):
                 if job_data.get("country"):
                     location_parts.append(job_data["country"])
                 location = ", ".join(location_parts)
+
+                if not self._should_include_job(title, company_slug, location):
+                    continue
+
+                shortcode = job_data.get("shortcode", "")
+                job_url = f"https://apply.workable.com/{company_slug}/j/{shortcode}/"
 
                 jobs.append(RawJobData(
                     title=title,
@@ -95,11 +96,6 @@ class WorkableScraper(BaseScraper):
 
                 for job_data in data.get("results", []):
                     title = job_data.get("title", "")
-                    if not self._is_gtm_title(title):
-                        continue
-
-                    shortcode = job_data.get("shortcode", "")
-                    job_url = f"https://apply.workable.com/{company_slug}/j/{shortcode}/"
 
                     location_parts = []
                     if job_data.get("city"):
@@ -107,6 +103,12 @@ class WorkableScraper(BaseScraper):
                     if job_data.get("country"):
                         location_parts.append(job_data["country"])
                     location = ", ".join(location_parts)
+
+                    if not self._should_include_job(title, company_slug, location):
+                        continue
+
+                    shortcode = job_data.get("shortcode", "")
+                    job_url = f"https://apply.workable.com/{company_slug}/j/{shortcode}/"
 
                     jobs.append(RawJobData(
                         title=title,

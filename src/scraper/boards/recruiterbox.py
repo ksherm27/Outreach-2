@@ -50,12 +50,13 @@ class RecruiterboxScraper(BaseScraper):
             openings = data if isinstance(data, list) else data.get("objects", [])
             for opening in openings:
                 title = opening.get("title", "")
-                if not self._is_gtm_title(title):
-                    continue
 
                 location = opening.get("location", {})
                 if isinstance(location, dict):
                     location = location.get("city", "")
+
+                if not self._should_include_job(title, company_slug, location if isinstance(location, str) else ""):
+                    continue
 
                 job_url = opening.get("hosted_url", "")
                 if not job_url:

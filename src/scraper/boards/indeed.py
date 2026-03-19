@@ -59,6 +59,11 @@ class IndeedScraper(BaseScraper):
                     else:
                         continue
 
+                    if self._is_excluded_industry(title, company):
+                        continue
+                    if not self._is_north_america(location):
+                        continue
+
                     jobs.append(RawJobData(
                         title=title,
                         company_name=company,

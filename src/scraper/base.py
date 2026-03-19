@@ -101,7 +101,6 @@ class BaseScraper(ABC):
             raise ScraperError(f"Request failed for {url}: {e}") from e
 
     # Broad GTM-relevant keywords for filtering job titles from company boards.
-    # The full search_queries ("VP Sales SaaS") are too specific for title matching.
     GTM_TITLE_KEYWORDS = [
         "sales", "marketing", "revenue", "gtm", "go-to-market", "go to market",
         "growth", "demand gen", "demand generation", "business development",
@@ -115,10 +114,109 @@ class BaseScraper(ABC):
         "cro", "cmo", "chief revenue", "chief marketing",
     ]
 
+    # Industries to exclude — hospitality, food service, etc.
+    EXCLUDED_INDUSTRY_KEYWORDS = [
+        # Food & Beverage / Hospitality
+        "food", "restaurant", "hospitality", "hotel", "beverage", "catering",
+        "kitchen", "chef", "menu", "dining", "brewery", "winery", "bakery",
+        "grocery", "fast food", "food service", "foodservice",
+        # Other non-tech industries
+        "insurance", "construction", "manufacturing", "real estate", "mortgage",
+        "automotive", "trucking", "logistics", "staffing agency", "recruiting agency",
+        "oil and gas", "oil & gas", "mining", "agriculture", "farming",
+        "janitorial", "cleaning service", "pest control", "lawn care",
+        "plumbing", "hvac", "roofing", "flooring",
+        # Education / Government / Nonprofit
+        "school district", "public school", "university of", "college of",
+        "county of", "city of", "state of", "government", "federal",
+        "nonprofit", "non-profit", "church", "ministry",
+    ]
+
+    # Locations considered North America / US (for filtering)
+    US_LOCATION_KEYWORDS = [
+        "united states", "usa", "us", "u.s.", "remote",
+        "new york", "san francisco", "los angeles", "chicago", "boston",
+        "seattle", "austin", "denver", "atlanta", "miami", "dallas",
+        "houston", "phoenix", "philadelphia", "washington", "portland",
+        "san diego", "san jose", "nashville", "charlotte", "minneapolis",
+        "salt lake", "raleigh", "tampa", "detroit", "pittsburgh",
+        "columbus", "indianapolis", "kansas city", "st. louis", "st louis",
+        "baltimore", "milwaukee", "sacramento", "san antonio",
+        "california", "new jersey", "texas", "florida", "illinois",
+        "massachusetts", "washington", "colorado", "georgia", "virginia",
+        "north carolina", "pennsylvania", "ohio", "michigan", "arizona",
+        "oregon", "maryland", "tennessee", "minnesota", "wisconsin",
+        "utah", "connecticut", "indiana", "missouri",
+        "ny", "ca", "tx", "fl", "il", "ma", "wa", "co", "ga", "va", "nc", "pa",
+        # Canada
+        "canada", "toronto", "vancouver", "montreal", "calgary", "ottawa",
+        # General
+        "americas", "amer", "north america",
+    ]
+
     def _is_gtm_title(self, title: str) -> bool:
         """Check if a job title is GTM-relevant using broad keyword matching."""
         title_lower = title.lower()
         return any(kw in title_lower for kw in self.GTM_TITLE_KEYWORDS)
+
+    def _is_excluded_industry(self, title: str, company_name: str) -> bool:
+        """Check if a job/company belongs to an excluded industry."""
+        combined = f"{title} {company_name}".lower()
+        return any(kw in combined for kw in self.EXCLUDED_INDUSTRY_KEYWORDS)
+
+    def _is_north_america(self, location: str) -> bool:
+        """Check if a location is in North America (US/Canada).
+
+        Returns True if:
+        - Location matches a US/Canada keyword
+        - Location is empty/unspecified (benefit of the doubt)
+        """
+        if not location or not location.strip():
+            return True  # No location specified — include it
+
+        loc_lower = location.lower().strip()
+
+        # Exclude obvious non-US locations
+        non_us_indicators = [
+            "united kingdom", "uk", "london", "germany", "berlin", "munich",
+            "france", "paris", "japan", "tokyo", "india", "bangalore", "mumbai",
+            "hyderabad", "bengaluru", "china", "beijing", "shanghai", "shenzhen",
+            "australia", "sydney", "melbourne", "singapore", "hong kong",
+            "brazil", "são paulo", "sao paulo", "mexico city",
+            "ireland", "dublin", "netherlands", "amsterdam", "spain", "madrid",
+            "italy", "milan", "rome", "sweden", "stockholm", "norway", "oslo",
+            "denmark", "copenhagen", "finland", "helsinki", "poland", "warsaw",
+            "czech", "prague", "austria", "vienna", "switzerland", "zurich",
+            "israel", "tel aviv", "south korea", "seoul", "taiwan", "taipei",
+            "indonesia", "jakarta", "philippines", "manila", "vietnam",
+            "thailand", "bangkok", "malaysia", "kuala lumpur",
+            "south africa", "cape town", "johannesburg", "nigeria", "lagos",
+            "egypt", "cairo", "kenya", "nairobi", "uae", "dubai", "abu dhabi",
+            "saudi", "riyadh", "qatar", "doha", "argentina", "buenos aires",
+            "colombia", "bogota", "chile", "santiago", "peru", "lima",
+            "new zealand", "auckland", "emea", "apac", "latam",
+        ]
+
+        # If it explicitly mentions a non-US region, exclude
+        if any(non_us in loc_lower for non_us in non_us_indicators):
+            return False
+
+        # If it matches a US/Canada keyword, include
+        if any(us in loc_lower for us in self.US_LOCATION_KEYWORDS):
+            return True
+
+        # If we can't determine — include (will be filtered by ICP scoring later)
+        return True
+
+    def _should_include_job(self, title: str, company_name: str, location: str | None) -> bool:
+        """Combined filter: GTM title + not excluded industry + North America."""
+        if not self._is_gtm_title(title):
+            return False
+        if self._is_excluded_industry(title, company_name):
+            return False
+        if not self._is_north_america(location or ""):
+            return False
+        return True
 
     @abstractmethod
     def scrape(self, search_queries: list[str], company_slugs: list[str] | None = None) -> list[RawJobData]:

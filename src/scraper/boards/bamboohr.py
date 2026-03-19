@@ -50,10 +50,10 @@ class BambooHRScraper(BaseScraper):
 
             for result in data.get("result", []):
                 title = result.get("jobOpeningName", "")
-                if not self._is_gtm_title(title):
-                    continue
-
                 location = result.get("location", {}).get("city", "")
+
+                if not self._should_include_job(title, company_slug, location):
+                    continue
                 job_id = result.get("id", "")
                 job_url = f"https://{company_slug}.bamboohr.com/careers/{job_id}"
 

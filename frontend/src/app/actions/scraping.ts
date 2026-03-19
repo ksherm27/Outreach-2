@@ -71,3 +71,20 @@ async function getEnabledBoards(): Promise<string[]> {
     "icims", "recruiterbox", "workday", "linkedin", "indeed",
   ];
 }
+
+export async function clearScrapedJobs() {
+  // Delete in dependency order: outreach_messages → scraped_jobs → scrape_runs
+  const deletedMessages = await prisma.outreach_messages.deleteMany({});
+  const deletedJobs = await prisma.scraped_jobs.deleteMany({});
+  const deletedRuns = await prisma.scrape_runs.deleteMany({});
+
+  revalidatePath("/scrape-runs");
+  revalidatePath("/outreach");
+  revalidatePath("/");
+  return {
+    success: true,
+    jobsDeleted: deletedJobs.count,
+    runsDeleted: deletedRuns.count,
+    messagesDeleted: deletedMessages.count,
+  };
+}

@@ -56,13 +56,14 @@ class SmartRecruitersScraper(BaseScraper):
 
                 for posting in content:
                     title = posting.get("name", "")
-                    if not self._is_gtm_title(title):
-                        continue
 
                     location_data = posting.get("location", {})
                     location = location_data.get("city", "")
                     if location_data.get("country"):
                         location = f"{location}, {location_data['country']}"
+
+                    if not self._should_include_job(title, company_id, location):
+                        continue
 
                     ref_url = posting.get("ref", "")
 

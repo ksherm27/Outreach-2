@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { Badge, statusBadgeVariant } from "@/components/badge";
-import { AutomationToggle, ManualScrapeControls } from "./scrape-controls";
+import { AutomationToggle, ManualScrapeControls, ClearJobsButton } from "./scrape-controls";
 
 export const dynamic = "force-dynamic";
 
@@ -26,9 +26,10 @@ export default async function ScrapeRunsPage() {
     <div>
       <h2 className="text-2xl font-bold mb-8 text-gray-100">Scrape Runs</h2>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-3 gap-4 mb-6">
         <AutomationToggle initialEnabled={automationEnabled} />
         <ManualScrapeControls />
+        <ClearJobsButton />
       </div>
 
       <div className="grid grid-cols-5 gap-4 mb-8">
