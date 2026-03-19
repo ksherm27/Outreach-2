@@ -159,6 +159,23 @@ class BaseScraper(ABC):
         title_lower = title.lower()
         return any(kw in title_lower for kw in self.GTM_TITLE_KEYWORDS)
 
+    # Early-career / junior title indicators to exclude
+    EARLY_CAREER_KEYWORDS = [
+        "intern", "internship", "co-op", "coop",
+        "junior", "jr.", "jr ",
+        "entry level", "entry-level",
+        "associate",  # e.g. "Associate Account Executive"
+        "early career", "early-career",
+        "new grad", "new graduate", "recent graduate",
+        "coordinator",  # typically junior-level
+        "assistant",
+    ]
+
+    def _is_early_career(self, title: str) -> bool:
+        """Check if a job title indicates an early-career / junior role."""
+        title_lower = title.lower()
+        return any(kw in title_lower for kw in self.EARLY_CAREER_KEYWORDS)
+
     def _is_excluded_industry(self, title: str, company_name: str) -> bool:
         """Check if a job/company belongs to an excluded industry."""
         combined = f"{title} {company_name}".lower()
@@ -209,8 +226,10 @@ class BaseScraper(ABC):
         return True
 
     def _should_include_job(self, title: str, company_name: str, location: str | None) -> bool:
-        """Combined filter: GTM title + not excluded industry + North America."""
+        """Combined filter: GTM title + not early career + not excluded industry + North America."""
         if not self._is_gtm_title(title):
+            return False
+        if self._is_early_career(title):
             return False
         if self._is_excluded_industry(title, company_name):
             return False

@@ -61,6 +61,8 @@ class IndeedScraper(BaseScraper):
 
                     if self._is_excluded_industry(title, company):
                         continue
+                    if self._is_early_career(title):
+                        continue
                     if not self._is_north_america(location):
                         continue
 
